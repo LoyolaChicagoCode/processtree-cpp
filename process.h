@@ -17,25 +17,19 @@
 using namespace std;
 
 struct process {
-	string uid;
-	unsigned int pid, ppid, c;
-	string stime, tty, time, cmd;
+	unsigned int pid, ppid;
+	string cmd;
 	process();
-	process(char* line);
+	process(char* line, int i_pid, int i_ppid, int i_cmd);
 	friend std::ostream& operator<<(std::ostream& str, process const& data);
 };
 
 process::process() { }
 
-process::process(char* line) {
+process::process(char* line, int i_pid, int i_ppid, int i_cmd) {
 	const char* tok;
-	tok = strtok(line, " ");  uid = tok;
 	tok = strtok(NULL, " "); pid = atoi(tok);
 	tok = strtok(NULL, " "); ppid = atoi(tok);
-	tok = strtok(NULL, " "); c = atoi(tok);
-	tok = strtok(NULL, " "); stime = tok;
-	tok = strtok(NULL, " "); tty = tok;
-	tok = strtok(NULL, " "); time = tok;
 	tok = strtok(NULL, " "); cmd = tok;
 	// strip trailing newline if present
 	const size_t l = cmd.find('\n');
@@ -44,17 +38,7 @@ process::process(char* line) {
 }
 
 ostream& operator<<(std::ostream& str, process const& data) {
-	str << "Proc("
-		<< data.uid << ", "
-		<< data.pid << ", "
-		<< data.ppid << ", "
-		<< data.c << ", "
-		<< data.stime << ", "
-		<< data.tty << ", "
-		<< data.time << ", "
-		<< data.cmd.substr(0, 20)
-		<< ")";
-	return str;
+	return str << data.pid << ": " << data.cmd << ")";
 }
 
 #endif /* PROCESS_H_ */
