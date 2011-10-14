@@ -23,14 +23,15 @@ using std::vector;
 const char* const TERM = " \t\n\r";
 const char* const EOL = "\n\r";
 
-size_t find_header_field(vector<string>& tokens, const char* const name, bool optional = false) {
+int find_header_field(vector<string>& tokens, const char* const name) {
 	const vector<string>::iterator first = tokens.begin(), last = tokens.end();
 	const vector<string>::iterator it = find(first, last, name);
-	if (! optional && it >= last) {
-		std::cerr << "required header field " << name << " missing!" << std::endl;
-		exit(1);
-	}
-	return it - first;
+	return it < last ? it - first : -1;
+}
+
+void report_missing_header_field(const char* const name) {
+	std::cerr << "required header field " << name << " missing!" << std::endl;
+	exit(1);
 }
 
 Format_Info::Format_Info(char* const header) {
@@ -41,12 +42,12 @@ Format_Info::Format_Info(char* const header) {
 		tok = strtok(NULL, TERM);
 	}
 	const int pid = find_header_field(tokens, "PID");
+	if (pid < 0) report_missing_header_field("PID");
 	const int ppid = find_header_field(tokens, "PPID");
-	cmd = find_header_field(tokens, "CMD", true);
-	if (cmd >= tokens.size())
-		cmd = find_header_field(tokens, "COMMAND");
+	if (ppid < 0) report_missing_header_field("PPID");
+	cmd = max(find_header_field(tokens, "CMD"), find_header_field(tokens, "COMMAND"));
 	if (cmd < max(pid, ppid)) {
-		std::cerr << "CMD header must follow PID and PPID!" << std::endl;
+		std::cerr << "required header field CMD or COMMAND missing or not last!" << std::endl;
 		exit(1);
 	}
 	if (pid < ppid) {
