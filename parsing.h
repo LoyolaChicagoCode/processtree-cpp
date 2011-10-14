@@ -8,7 +8,7 @@
 #ifndef PARSING_H_
 #define PARSING_H_
 
-#include "process.h"
+struct process;
 
 class Format_Info {
 private:
@@ -16,7 +16,7 @@ private:
 	bool pidFirst;
 public:
 	Format_Info(char* const header);
-	void parse_process(process& p, char* const line);
+	void parse_process(process& p, char* const line) const;
 };
 
 #endif /* PARSING_H_ */

@@ -1,8 +1,8 @@
 CXXFLAGS =	#-O2 -g -Wall -fmessage-length=0
 
-INCLUDES =	process.h
+INCLUDES =	process.h parsing.h
 
-OBJS =		main.o
+OBJS =		main.o parsing.o
 
 LIBS =
 
