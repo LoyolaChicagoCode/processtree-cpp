@@ -20,15 +20,13 @@ using std::max;
 using std::string;
 using std::vector;
 
-typedef vector<string>::iterator IT;
-
 const char* const TERM = " \t\n\r";
 const char* const EOL = "\n\r";
 
 size_t find_header_field(vector<string>& tokens, const char* const name, bool optional = false) {
-	const IT first = tokens.begin(), last = tokens.end();
-	const IT it = find(first, last, name);
-	if (! optional && it == last) {
+	const vector<string>::iterator first = tokens.begin(), last = tokens.end();
+	const vector<string>::iterator it = find(first, last, name);
+	if (! optional && it >= last) {
 		std::cerr << "required header field " << name << " missing!" << std::endl;
 		exit(1);
 	}
