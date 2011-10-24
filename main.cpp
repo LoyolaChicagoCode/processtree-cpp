@@ -14,8 +14,8 @@ const unsigned int BUF_SIZE = 1 << 16;
 void print_tree(map<int, process>& m, multimap<int, int>& t, int i, int l) {
 	// indent, then print current process
 	for (int k = 0; k < l; k++)
-		std::cout << "  ";
-	std::cout << m[i] << std::endl;
+		std::cout << ' ';
+	std::cout << m[i] << '\n';
 	// print children indented by one more level
 	for (multimap<int, int>::iterator e = t.lower_bound(i); e != t.upper_bound(i); e++)
 		print_tree(m, t, e->second, l + 1);
