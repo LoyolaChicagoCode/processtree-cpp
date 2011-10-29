@@ -1,4 +1,4 @@
-//#define USE_IOSTREAM 1
+#define USE_IOSTREAM 1
 
 #include <cstring> // strtok
 #ifdef USE_IOSTREAM
@@ -14,7 +14,8 @@ using std::map;
 using std::multimap;
 using std::pair;
 
-const unsigned int BUF_SIZE = 1 << 16;
+const unsigned int LINE_BUF_SIZE = 2048;
+const unsigned int IO_BUF_SIZE = 8192;
 
 void print_tree(map<int, process>& m, multimap<int, int>& t, int i, int l) {
 	// indent, then print current process
@@ -36,8 +37,8 @@ void print_tree(map<int, process>& m, multimap<int, int>& t, int i, int l) {
 }
 
 int main(int argc, char* argv[]) {
-	char buf[BUF_SIZE];
-	char obuf[8192];
+	char buf[LINE_BUF_SIZE];
+	char obuf[IO_BUF_SIZE];
 	map<int, process> m;
 	multimap<int, int> t;
 
