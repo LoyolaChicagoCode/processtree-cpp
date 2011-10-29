@@ -37,13 +37,16 @@ void print_tree(map<int, process>& m, multimap<int, int>& t, int i, int l) {
 
 int main(int argc, char* argv[]) {
 	char buf[BUF_SIZE];
+	char obuf[8192];
 	map<int, process> m;
 	multimap<int, int> t;
 
 	// analyze header line
 #ifdef USE_IOSTREAM
+	std::cout.rdbuf()->pubsetbuf(obuf, 18192);
 	std::cin.getline(buf, sizeof(buf));
 #else
+	setbuf(stdout, obuf);
 	fgets(buf, sizeof(buf), stdin);
 #endif
 	Format_Info fi(buf);
@@ -56,13 +59,15 @@ int main(int argc, char* argv[]) {
 #endif
 		process proc(buf, fi);
 		m.insert(pair<int, process>(proc.pid, proc));
+		t.insert(pair<int, int>(proc.ppid, proc.pid));
 	}
-
-	// create tree by reversing first table into second one
-	for (map<int, process>::iterator i = m.begin(); i != m.end(); i++)
-		t.insert(pair<int, int>(i->second.ppid, i->second.pid));
 
 	// print as tree
 	for (multimap<int, int>::iterator e = t.lower_bound(0); e != t.upper_bound(0); e++)
 		print_tree(m, t, e->second, 0);
+#ifdef USE_IOSTREAM
+	std::cout.flush();
+#else
+	fflush(stdout);
+#endif
 }
