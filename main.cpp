@@ -1,11 +1,11 @@
 #define USE_IOSTREAM 1
 
-#include <cstring> // strtok
 #ifdef USE_IOSTREAM
 	#include <iostream>
 #else
 	#include <cstdio>  // popen, fgets
 #endif
+#include <string>
 #include <map>
 
 #include "process.h"
@@ -13,11 +13,12 @@
 using std::map;
 using std::multimap;
 using std::pair;
+using std::string;
 
 const unsigned int LINE_BUF_SIZE = 2048;
 const unsigned int IO_BUF_SIZE = 8192;
 
-void print_tree(map<int, process>& m, multimap<int, int>& t, int i, int l) {
+void print_tree(map<int, string>& m, multimap<int, int>& t, int i, int l) {
 	// indent, then print current process
 	for (int k = 0; k < l; k++)
 #ifdef USE_IOSTREAM
@@ -26,7 +27,7 @@ void print_tree(map<int, process>& m, multimap<int, int>& t, int i, int l) {
 		putchar(' ');
 #endif
 #ifdef USE_IOSTREAM
-	std::cout << m[i] << '\n';
+	std::cout << i << ": " << m[i] << '\n';
 #else
 	printf("%d: ", m[i].pid);
 	puts(m[i].cmd.c_str());
@@ -39,7 +40,7 @@ void print_tree(map<int, process>& m, multimap<int, int>& t, int i, int l) {
 int main(int argc, char* argv[]) {
 	char buf[LINE_BUF_SIZE];
 	char obuf[IO_BUF_SIZE];
-	map<int, process> m;
+	map<int, string> m;
 	multimap<int, int> t;
 
 	// analyze header line
@@ -59,7 +60,7 @@ int main(int argc, char* argv[]) {
 	while (fgets(buf, sizeof(buf), stdin) != NULL) {
 #endif
 		process proc(buf, fi);
-		m.insert(pair<int, process>(proc.pid, proc));
+		m.insert(pair<int, string>(proc.pid, proc.cmd));
 		t.insert(pair<int, int>(proc.ppid, proc.pid));
 	}
 
