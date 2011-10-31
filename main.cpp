@@ -1,4 +1,4 @@
-#define USE_IOSTREAM 0
+//#define USE_IOSTREAM 1
 
 #ifdef USE_IOSTREAM
 	#include <iostream>
@@ -31,8 +31,8 @@ void print_tree(hash_map<int, string>& m, hash_map<int, vector<int> >& t, int i,
 #ifdef USE_IOSTREAM
 	std::cout << i << ": " << m[i] << '\n';
 #else
-	printf("%d: ", m[i].pid);
-	puts(m[i].cmd.c_str());
+	printf("%d: ", i);
+	puts(m[i].c_str());
 #endif
 	// print children indented by one more level
 	for (vector<int>::iterator e = t[i].begin(); e != t[i].end(); e++)
