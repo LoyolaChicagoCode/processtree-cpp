@@ -7,7 +7,7 @@
 
 #include <cstdlib> // atoi
 #include <cstring> // strtok
-#include <iostream>
+#include <cstdio>
 #include <string>
 #include <vector>
 #include <algorithm> // find, max
@@ -30,7 +30,7 @@ int find_header_field(vector<string>& tokens, const char* const name) {
 }
 
 void report_missing_header_field(const char* const name) {
-	std::cerr << "required header field " << name << " missing!" << std::endl;
+	fprintf(stderr, "required header field %s missing!\n", name);
 	exit(1);
 }
 
@@ -47,7 +47,7 @@ process_parser::process_parser(char* const header) {
 	if (ppid < 0) report_missing_header_field("PPID");
 	cmd = max(find_header_field(tokens, "CMD"), find_header_field(tokens, "COMMAND"));
 	if (cmd < max(pid, ppid)) {
-		std::cerr << "required header field CMD or COMMAND missing or not last!" << std::endl;
+		fputs("required header field CMD or COMMAND missing or not last!", stderr);
 		exit(1);
 	}
 	if (pid < ppid) {
