@@ -8,15 +8,15 @@
 #ifndef PARSING_H_
 #define PARSING_H_
 
-struct process;
+#include "process.h"
 
-class Format_Info {
+class process_parser {
 private:
 	size_t first, second, cmd;
 	bool pidFirst;
 public:
-	Format_Info(char* const header);
-	void parse_process(process& p, char* const line) const;
+	process_parser(char* const header);
+	void parse(process& p, char* const line) const;
 };
 
 #endif /* PARSING_H_ */

@@ -34,16 +34,16 @@ void report_missing_header_field(const char* const name) {
 	exit(1);
 }
 
-Format_Info::Format_Info(char* const header) {
+process_parser::process_parser(char* const header) {
 	const char* tok = strtok(header, TERM);
 	vector<string> tokens;
 	while (tok != NULL) {
 		tokens.push_back(tok);
 		tok = strtok(NULL, TERM);
 	}
-	const int pid = find_header_field(tokens, "PID");
+	const unsigned int pid = find_header_field(tokens, "PID");
 	if (pid < 0) report_missing_header_field("PID");
-	const int ppid = find_header_field(tokens, "PPID");
+	const unsigned int ppid = find_header_field(tokens, "PPID");
 	if (ppid < 0) report_missing_header_field("PPID");
 	cmd = max(find_header_field(tokens, "CMD"), find_header_field(tokens, "COMMAND"));
 	if (cmd < max(pid, ppid)) {
@@ -57,13 +57,13 @@ Format_Info::Format_Info(char* const header) {
 	}
 }
 
-void Format_Info::parse_process(process& p, char* const line) const {
+void process_parser::parse(process& p, char* const line) const {
 	const char* tok = strtok(line, TERM);
-	for (int i = 0; i < first; i++) tok = strtok(NULL, TERM);
+	for (unsigned int i = 0; i < first; i++) tok = strtok(NULL, TERM);
 	if (pidFirst) p.pid = atoi(tok); else p.ppid = atoi(tok);
-	for (int i = first; i < second; i++) tok = strtok(NULL, TERM);
+	for (unsigned int i = first; i < second; i++) tok = strtok(NULL, TERM);
 	if (pidFirst) p.ppid = atoi(tok); else p.pid = atoi(tok);
-	for (int i = second; i < cmd - 1; i++) tok = strtok(NULL, TERM);
+	for (unsigned int i = second; i < cmd - 1; i++) tok = strtok(NULL, TERM);
 	p.cmd = strtok(NULL, EOL);
 	// strip trailing newline if present
 	size_t l = p.cmd.find('\n');

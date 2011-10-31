@@ -9,8 +9,8 @@
 #include <vector>
 #include <hash_map>
 
-
 #include "process.h"
+#include "parsing.h"
 
 using __gnu_cxx::hash_map;
 using std::vector;
@@ -53,15 +53,16 @@ int main(int argc, char* argv[]) {
 	setbuf(stdout, obuf);
 	fgets(buf, sizeof(buf), stdin);
 #endif
-	Format_Info fi(buf);
+	process_parser parser(buf);
 
 	// read lines, parse to process object, and insert into table
+	process proc;
 #ifdef USE_IOSTREAM
 	while (std::cin.getline(buf, sizeof(buf)) != NULL) {
 #else
 	while (fgets(buf, sizeof(buf), stdin) != NULL) {
 #endif
-		process proc(buf, fi);
+		parser.parse(proc, buf);
 		m.insert(pair<int, string>(proc.pid, proc.cmd));
 		t[proc.ppid].push_back(proc.pid);
 	}
