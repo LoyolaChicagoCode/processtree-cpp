@@ -1,8 +1,8 @@
 CXXFLAGS =	-O2 -Wall -fmessage-length=0
 
-INCLUDES =	process.h parsing.h
+INCLUDES =	process.h parsing.h io.h
 
-OBJS =		main.o parsing.o
+OBJS =		main.o parsing.o io_stdio.o
 
 LIBS =
 
@@ -15,3 +15,6 @@ all:	$(TARGET)
 
 clean:
 	rm -f $(OBJS) $(TARGET)
+
+io_iostream.o:	io_iostream.cpp io.h
+io_stdio.o:	io_stdio.cpp io.h
