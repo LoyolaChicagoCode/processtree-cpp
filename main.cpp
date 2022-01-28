@@ -25,23 +25,23 @@ void print_tree(unordered_map<int, string>& m, unordered_map<int, vector<int> >&
 }
 
 int main(int argc, char* argv[]) {
-	char buf[LINE_BUF_SIZE];
+	char ibuf[LINE_BUF_SIZE];
 	char obuf[IO_BUF_SIZE];
     unordered_map<int, string> m;
     unordered_map<int, vector<int> > t;
 
 	// analyze header line
 	set_stdout_buffer(obuf, IO_BUF_SIZE);
-	read_line(buf, LINE_BUF_SIZE);
-	process_parser parser(buf);
+	read_line(ibuf, LINE_BUF_SIZE);
+	process_parser parser(ibuf);
 
 	// read lines, parse to process object, and insert into table
 	process proc;
     auto count = 0;
-	while (read_line(buf, LINE_BUF_SIZE)) {
-        fprintf(stderr, "%zu characters in this line\n", strlen(buf));
+	while (read_line(ibuf, LINE_BUF_SIZE)) {
+        fprintf(stderr, "%zu characters in this line\n", strlen(ibuf));
         count ++;
-		parser.parse(proc, buf);
+		parser.parse(proc, ibuf);
 		m.insert(pair<int, string>(proc.pid, proc.cmd));
 		t[proc.ppid].push_back(proc.pid);
 	}
