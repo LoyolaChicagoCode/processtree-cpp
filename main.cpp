@@ -1,6 +1,6 @@
-#include <string>
 #include <vector>
 #include <unordered_map>
+#include <spdlog/spdlog.h>
 
 #include "io.h"
 #include "process.h"
@@ -39,14 +39,14 @@ int main(int argc, char* argv[]) {
 	process proc;
     auto count = 0;
 	while (read_line(ibuf, LINE_BUF_SIZE)) {
-        fprintf(stderr, "%zu characters in this line\n", strlen(ibuf));
+        spdlog::debug("{} characters in the current input line", strlen(ibuf));
         count ++;
 		parser.parse(proc, ibuf);
 		m.insert(pair<int, string>(proc.pid, proc.cmd));
 		t[proc.ppid].push_back(proc.pid);
 	}
 
-    fprintf(stderr, "%d processes parsed\n", count);
+    spdlog::debug("{%d} processes parsed", count);
 
 	// print as tree
 	for (auto e = t[0].begin(); e != t[0].end(); e++)

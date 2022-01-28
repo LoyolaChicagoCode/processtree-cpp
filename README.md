@@ -1,3 +1,8 @@
+# Requirements
+
+- GoogleTest
+- SpdLog
+
 # Building
 
 ```

@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <algorithm> // find, max
+#include <spdlog/spdlog.h>
 
 #include "parsing.h"
 #include "process.h"
@@ -30,7 +31,7 @@ int find_header_field(vector<string>& tokens, const char* const name) {
 }
 
 void report_missing_header_field(const char* const name) {
-	fprintf(stderr, "required header field %s missing!\n", name);
+	spdlog::error("required header field {} missing!", name);
 	exit(1);
 }
 
@@ -47,7 +48,7 @@ process_parser::process_parser(char* const header) {
 	if (ppid < 0) report_missing_header_field("PPID");
 	cmd = max(find_header_field(tokens, "CMD"), find_header_field(tokens, "COMMAND"));
 	if (cmd < max(pid, ppid)) {
-		fputs("required header field CMD or COMMAND missing or not last!", stderr);
+		spdlog::error("required header field CMD or COMMAND missing or not last!");
 		exit(1);
 	}
 	if (pid < ppid) {
