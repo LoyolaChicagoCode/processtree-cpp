@@ -36,16 +36,16 @@ int main(int argc, char* argv[]) {
 	process_parser parser(ibuf);
 
 	// read lines, parse to process object, and insert into table
+    spdlog::debug("starting to parse processes");
 	process proc;
     auto count = 0;
 	while (read_line(ibuf, LINE_BUF_SIZE)) {
         spdlog::debug("{} characters in the current input line", strlen(ibuf));
         count ++;
-		parser.parse(proc, ibuf);
+		proc = parser.parse(ibuf);
 		m.insert(pair<int, string>(proc.pid, proc.cmd));
 		t[proc.ppid].push_back(proc.pid);
 	}
-
     spdlog::debug("{} processes parsed", count);
 
 	// print as tree

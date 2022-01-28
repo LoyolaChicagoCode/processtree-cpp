@@ -16,7 +16,7 @@ private:
 	bool pidFirst;
 public:
 	process_parser(char* const header);
-	void parse(process& p, char* const line) const;
+	process parse(char* const line) const;
 };
 
 #endif /* PARSING_H_ */

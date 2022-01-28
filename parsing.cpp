@@ -58,7 +58,8 @@ process_parser::process_parser(char* const header) {
 	}
 }
 
-void process_parser::parse(process& p, char* const line) const {
+process process_parser::parse(char* const line) const {
+    process p;
     auto tok = strtok(line, TERM);
 	for (auto i = 0; i < first; i++) tok = strtok(NULL, TERM);
 	if (pidFirst) p.pid = atoi(tok); else p.ppid = atoi(tok);
@@ -71,4 +72,5 @@ void process_parser::parse(process& p, char* const line) const {
 	if (l != string::npos) p.cmd = p.cmd.substr(0, int(l));
 	l = p.cmd.find('\r');
 	if (l != string::npos) p.cmd = p.cmd.substr(0, int(l));
+    return p;
 }
