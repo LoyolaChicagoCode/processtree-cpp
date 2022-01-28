@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
 		t[proc.ppid].push_back(proc.pid);
 	}
 
-    spdlog::debug("{%d} processes parsed", count);
+    spdlog::debug("{} processes parsed", count);
 
 	// print as tree
 	for (auto e = t[0].begin(); e != t[0].end(); e++)
