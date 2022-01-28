@@ -1,3 +1,4 @@
+*.app
 #
 # .hgignore - Mercurial ignore list
 #
@@ -24,7 +25,6 @@ TAGS
 *.o
 *.obj
 *.exe
-*.app
 *.a
 *.lib
 *.so
@@ -96,3 +96,12 @@ xcuserdata
 *.perspectivev3
 *.xcworkspace
 .DS_Store
+
+# CLion
+.idea
+
+# CMake
+Makefile
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake

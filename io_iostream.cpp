@@ -14,7 +14,7 @@ void set_stdout_buffer(char* const obuf, const int size) {
 }
 
 bool read_line(char* const buf, const int size) {
-	return std::cin.getline(buf, size);
+	return std::cin.getline(buf, size).good();
 }
 
 void flush_stdout() { std::cout.flush(); }
