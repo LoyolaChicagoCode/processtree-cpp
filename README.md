@@ -6,8 +6,8 @@
 # Building
 
 ```
-$ cmake -S . -B build && cd build
-$ cmake --build . && cd ..
+$ cmake -S . -B build
+$ cmake --build build
 ```
 
 # Running the program
