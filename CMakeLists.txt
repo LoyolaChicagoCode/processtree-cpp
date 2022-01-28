@@ -27,13 +27,13 @@ find_package(GTest REQUIRED)
 enable_testing()
 
 add_executable(
-        simple_test
+        processtree_tests
         processtree_tests.cpp
 )
 target_link_libraries(
-        simple_test
+        processtree_tests
         ${GTEST_MAIN_LIBRARIES}
 )
 
 include(GoogleTest)
-gtest_discover_tests(simple_test)
+gtest_discover_tests(processtree_tests)
