@@ -3,4 +3,4 @@ project(processtree)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(processtree main.cpp parsing.cpp io_iostream.cpp)
+add_executable(processtree main.cpp parsing.cpp io_stdio.cpp)
