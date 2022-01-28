@@ -2,5 +2,32 @@ cmake_minimum_required(VERSION 3.21)
 project(processtree)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_executable(processtree main.cpp parsing.cpp io_stdio.cpp)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+add_executable(
+        processtree
+        main.cpp
+        parsing.cpp
+        io_stdio.cpp
+)
+
+# https://cmake.org/cmake/help/latest/module/FindGTest.html
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+enable_testing()
+
+add_executable(
+        simple_test
+        simple_test.cpp
+)
+target_link_libraries(
+        simple_test
+        ${GTEST_MAIN_LIBRARIES}
+)
+
+include(GoogleTest)
+gtest_discover_tests(simple_test)
