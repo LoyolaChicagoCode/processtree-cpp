@@ -11,16 +11,16 @@ using std::vector;
 using std::pair;
 using std::string;
 
-const unsigned int LINE_BUF_SIZE = 16384; // commands on MacOS can be really long!
-const unsigned int IO_BUF_SIZE = 8192;
+const auto LINE_BUF_SIZE = 16384; // commands on MacOS can be really long!
+const auto IO_BUF_SIZE = 8192;
 
 void print_tree(unordered_map<int, string>& m, unordered_map<int, vector<int> >& t, int i, int l) {
 	// indent, then print current process
-	for (int k = 0; k < l; k++)
+	for (auto k = 0; k < l; k++)
 		print_space();
 	print_process_info(i, m[i]);
 	// print children indented by one more level
-	for (vector<int>::iterator e = t[i].begin(); e != t[i].end(); e++)
+	for (auto e = t[i].begin(); e != t[i].end(); e++)
 		print_tree(m, t, *e, l + 1);
 }
 
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
 	process proc;
     auto count = 0;
 	while (read_line(buf, LINE_BUF_SIZE)) {
-        fprintf(stderr, "%d characters in this line\n", strlen(buf));
+        fprintf(stderr, "%zu characters in this line\n", strlen(buf));
         count ++;
 		parser.parse(proc, buf);
 		m.insert(pair<int, string>(proc.pid, proc.cmd));
@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
     fprintf(stderr, "%d processes parsed\n", count);
 
 	// print as tree
-	for (vector<int>::iterator e = t[0].begin(); e != t[0].end(); e++)
+	for (auto e = t[0].begin(); e != t[0].end(); e++)
 		print_tree(m, t, *e, 0);
 	flush_stdout();
 }
