@@ -22,7 +22,7 @@ enable_testing()
 
 add_executable(
         simple_test
-        simple_test.cpp
+        processtree_tests.cpp
 )
 target_link_libraries(
         simple_test
