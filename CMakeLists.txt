@@ -21,8 +21,13 @@ target_link_libraries(
         spdlog::spdlog
 )
 
-# https://cmake.org/cmake/help/latest/module/FindGTest.html
-find_package(GTest REQUIRED)
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG        release-1.11.0
+)
+FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
@@ -32,7 +37,7 @@ add_executable(
 )
 target_link_libraries(
         processtree_tests
-        ${GTEST_MAIN_LIBRARIES}
+        gtest_main
 )
 
 include(GoogleTest)
