@@ -12,11 +12,11 @@
 
 class process_parser {
 private:
-	size_t first, second, cmd;
-	bool pidFirst;
+    size_t first, second, cmd;
+    bool pidFirst;
 public:
-	process_parser(char* const header);
-	process parse(char* const line) const;
+    process_parser(char* const header);
+    process parse(char* const line) const;
 };
 
 #endif /* PARSING_H_ */
