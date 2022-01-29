@@ -5,9 +5,7 @@
  *      Author: laufer
  */
 
-#include <cstdlib> // atoi
 #include <cstring> // strtok
-#include <cstdio>
 #include <string>
 #include <vector>
 #include <algorithm> // find, max
@@ -18,6 +16,7 @@
 
 using std::find;
 using std::max;
+using std::stoi;
 using std::string;
 using std::vector;
 
@@ -62,9 +61,9 @@ process process_parser::parse(char* const line) const {
     process p;
     auto tok = strtok(line, TERM);
     for (auto i = 0; i < first; i++) tok = strtok(NULL, TERM);
-    if (pidFirst) p.pid = atoi(tok); else p.ppid = atoi(tok);
+    if (pidFirst) p.pid = std::stoi(tok); else p.ppid = stoi(tok);
     for (auto i = first; i < second; i++) tok = strtok(NULL, TERM);
-    if (pidFirst) p.ppid = atoi(tok); else p.pid = atoi(tok);
+    if (pidFirst) p.ppid = stoi(tok); else p.pid = stoi(tok);
     for (auto i = second; i < cmd - 1; i++) tok = strtok(NULL, TERM);
     p.cmd = strtok(NULL, EOL);
     // strip trailing newline if present
