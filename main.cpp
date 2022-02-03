@@ -1,20 +1,21 @@
+#include <iostream>
+
 #include <string>
 #include <vector>
-#include <hash_map>
+#include <unordered_map>
 
 #include "io.h"
 #include "process.h"
 #include "parsing.h"
 
-using __gnu_cxx::hash_map;
+using std::unordered_map;
 using std::vector;
 using std::pair;
 using std::string;
 
-const unsigned int LINE_BUF_SIZE = 2048;
-const unsigned int IO_BUF_SIZE = 8192;
+const unsigned int LINE_BUF_SIZE = 16348;
 
-void print_tree(hash_map<int, string>& m, hash_map<int, vector<int> >& t, int i, int l) {
+void print_tree(unordered_map<int, string>& m, unordered_map<int, vector<int> >& t, int i, int l) {
 	// indent, then print current process
 	for (int k = 0; k < l; k++)
 		print_space();
@@ -26,18 +27,16 @@ void print_tree(hash_map<int, string>& m, hash_map<int, vector<int> >& t, int i,
 
 int main(int argc, char* argv[]) {
 	char buf[LINE_BUF_SIZE];
-	char obuf[IO_BUF_SIZE];
-	hash_map<int, string> m;
-	hash_map<int, vector<int> > t;
+	unordered_map<int, string> m;
+	unordered_map<int, vector<int> > t;
 
 	// analyze header line
-	set_stdout_buffer(obuf, IO_BUF_SIZE);
 	read_line(buf, LINE_BUF_SIZE);
 	process_parser parser(buf);
 
 	// read lines, parse to process object, and insert into table
 	process proc;
-	while (read_line(buf, LINE_BUF_SIZE) != NULL) {
+	while (read_line(buf, LINE_BUF_SIZE)) {
 		parser.parse(proc, buf);
 		m.insert(pair<int, string>(proc.pid, proc.cmd));
 		t[proc.ppid].push_back(proc.pid);

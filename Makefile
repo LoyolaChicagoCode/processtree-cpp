@@ -1,4 +1,4 @@
-CXXFLAGS =	-O2 -Wall -fmessage-length=0
+CXXFLAGS =	-O3 -Wall -fmessage-length=0
 
 INCLUDES =	process.h parsing.h io.h
 
