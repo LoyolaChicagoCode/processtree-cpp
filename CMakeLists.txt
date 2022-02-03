@@ -9,19 +9,29 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 find_package(spdlog REQUIRED)
 
+find_package(fmt REQUIRED)
+
+include(FetchContent)
+FetchContent_Declare(
+        scnlib
+        GIT_REPOSITORY https://github.com/eliaskosunen/scnlib.git
+        GIT_TAG        v0.4
+)
+FetchContent_MakeAvailable(scnlib)
+
 add_executable(
         processtree
         main.cpp
         parsing.cpp
-        io_stdio.cpp
 )
 
 target_link_libraries(
         processtree
         spdlog::spdlog
+        fmt::fmt
+        scn::scn
 )
 
-include(FetchContent)
 FetchContent_Declare(
         googletest
         GIT_REPOSITORY https://github.com/google/googletest.git
