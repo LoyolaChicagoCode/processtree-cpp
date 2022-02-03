@@ -30,5 +30,5 @@ $ ./build/bin/processtree_tests
 - Allocating a new `vector<string>` for each input line or converting it into an instance variable of the parser makes no noticeable performance difference.
 - `scn::scan_list` is an excellent replacement for `strtok`.
 - `scn::getline` is three orders of magnitude slower than `std::getline`: 20 sec vs. 0.1 sec for 10,000 lines of input.  
-- spdlog extremely fast even when using the method calls instead of the compile-time macros.
-- stdio is still three times faster than the combination of {fmt} and 
+- spdlog is extremely fast even when using the method calls instead of the compile-time macros.
+- stdio is still about three times as fast as the combination of {fmt} and `std::getline`.
