@@ -1,12 +1,14 @@
 # Requirements
 
-- GoogleTest
-- SpdLog
+- [GoogleTest](https://google.github.io/googletest)
+- [spdLog](https://spdlog.docsforge.com)
+- [{fmt}](https://fmt.dev)
+- [scnlib](https://scnlib.readthedocs.io)
 
 # Building
 
 ```
-$ cmake -S . -B build
+$ cmake -DCMAKE_BUILD_TYPE=Release -S . -B build
 $ cmake --build build
 ```
 
@@ -22,6 +24,9 @@ $ ps -ef | ./build/bin/processtree
 $ ./build/bin/processtree_tests
 ```
 
-# Changing the IO library
+# Preliminary insights
 
-To switch between C stdio and iostream, choose between io_stdio.cpp and io_iostream.cpp in the add_executable element for processtree.
+- Returning a `process` instance or passing it by reference as an out argument makes no noticeable performance difference.
+- Allocating a new `vector<string>` for each input line or converting it into an instance variable of the parser makes no noticeable performance difference.
+- `scn::scan_list` is an excellent replacement for `strtok`.
+- `scn::getline` is three orders of magnitude slower than `std::getline`.
