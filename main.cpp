@@ -4,7 +4,6 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
-#include "process.h"
 #include "parsing.h"
 
 using std::string;
@@ -14,7 +13,6 @@ using std::vector;
 using std::cin;
 using std::getline;
 
-typedef vector<unsigned int> p_list;
 typedef unordered_map<unsigned int, string> cmd_map;
 typedef unordered_map<unsigned int, vector<unsigned int> > ppid_map;
 
@@ -30,7 +28,7 @@ int main(int argc, char* argv[]) {
     cmd_map m;
     ppid_map t;
 
-    spdlog::set_level(spdlog::level::warn);
+    spdlog::set_level(spdlog::level::debug);
 
     string line;
     getline(cin, line);
