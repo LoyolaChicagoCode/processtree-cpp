@@ -15,8 +15,8 @@ private:
 	size_t first, second, cmd;
 	bool pidFirst;
 public:
-	process_parser(char* const header);
-	void parse(process& p, char* const line) const;
+	explicit process_parser(char* header);
+	void parse(process& p, char* line) const;
 };
 
 #endif /* PARSING_H_ */

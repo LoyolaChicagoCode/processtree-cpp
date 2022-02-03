@@ -10,10 +10,10 @@
 
 #include <string>
 
-void print_space();
-void print_process_info(const int i, const std::string cmd);
-void set_stdout_buffer(char* const obuf, const int size);
-bool read_line(char* const buf, const int size);
+void print_spaces(unsigned int n);
+void print_process_info(unsigned int i, const std::string& cmd);
+void init_io();
+bool read_line(char* buf, size_t size);
 void flush_stdout();
 
 #endif /* IO_H_ */

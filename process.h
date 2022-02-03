@@ -16,7 +16,6 @@
 struct process {
 	unsigned int pid, ppid;
 	std::string cmd;
-	process() { }
 #ifdef USE_IOSTREAM
 	friend std::ostream& operator<<(std::ostream& str, process const& data) {
 		return str << data.pid << ": " << data.cmd;

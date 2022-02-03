@@ -96,3 +96,6 @@ xcuserdata
 *.perspectivev3
 *.xcworkspace
 .DS_Store
+
+.idea
+processtree

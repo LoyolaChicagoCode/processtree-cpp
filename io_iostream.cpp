@@ -2,19 +2,22 @@
 #include <string>
 
 using std::string;
+using std::cout;
+using std::cin;
 
-void print_space() { std::cout << ' '; }
+void print_spaces(const unsigned int n) { cout << string(n, ' '); }
 
-void print_process_info(const int i, const std::string cmd) {
-	std::cout << i << ": " << cmd << '\n';
+void print_process_info(const unsigned int i, const string& cmd) {
+	cout << i << ": " << cmd << '\n';
 }
 
-void set_stdout_buffer(char* const obuf, const int size) {
-	std::cout.rdbuf()->pubsetbuf(obuf, size);
+void init_io() {
+    std::ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 }
 
-bool read_line(char* const buf, const int size) {
-	return std::cin.getline(buf, size);
+bool read_line(char* const buf, const size_t size) {
+	return cin.getline(buf, size);
 }
 
-void flush_stdout() { std::cout.flush(); }
+void flush_stdout() { cout.flush(); }
