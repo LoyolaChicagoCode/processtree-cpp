@@ -8,15 +8,20 @@
 #ifndef PARSING_H_
 #define PARSING_H_
 
+#include <vector>
+
 #include "process.h"
+
+using std::vector;
+using std::string;
 
 class process_parser {
 private:
-    size_t first, second, cmd;
+    size_t pid, ppid, cmd;
     bool pidFirst;
 public:
-    process_parser(char* const header);
-    process parse(char* const line) const;
+    process_parser(const string& line);
+    process parse(const string& line) const;
 };
 
 #endif /* PARSING_H_ */
