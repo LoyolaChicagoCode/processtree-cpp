@@ -20,10 +20,10 @@ void print_tree(cmd_map& m, ppid_map& t, const unsigned int i, const unsigned in
     // indent, then print current process
     fmt::print("{} {}: {}\n", string(l, ' '), i, m.at(i));
     // return if current process is a leaf
-    if (t.count(i) == 0) return;
+    auto it = t.find(i);
+    if (it == t.end()) return;
     // print children indented by one more level
-    auto children = t.at(i);
-    for (auto e = children.begin(); e != children.end(); e++)
+    for (auto e = it->second.begin(); e != it->second.end(); e++)
         print_tree(m, t, *e, l + 1);
 }
 
