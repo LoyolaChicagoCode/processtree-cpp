@@ -16,21 +16,24 @@ using std::getline;
 typedef unordered_map<unsigned int, string> cmd_map;
 typedef unordered_map<unsigned int, vector<unsigned int> > ppid_map;
 
-void print_tree(const cmd_map& m, const ppid_map& t, const unsigned int i, const unsigned int l) {
+void print_tree(cmd_map& m, ppid_map& t, const unsigned int i, const unsigned int l) {
     // indent, then print current process
     fmt::print("{} {}: {}\n", string(l, ' '), i, m.at(i));
+    // return if current process is a leaf
+    if (t.count(i) == 0) return;
     // print children indented by one more level
-    for (auto e = t.at(i).begin(); e != t.at(i).end(); e++)
+    auto children = t.at(i);
+    for (auto e = children.begin(); e != children.end(); e++)
         print_tree(m, t, *e, l + 1);
 }
 
 int main(const int argc, const char* const argv[]) {
-    cmd_map m;
-    ppid_map t;
-
     spdlog::set_level(spdlog::level::info);
 
+    cmd_map m;
+    ppid_map t;
     string line;
+
     getline(cin, line);
     process_parser parser(line);
 
@@ -48,6 +51,6 @@ int main(const int argc, const char* const argv[]) {
     spdlog::debug("{} processes parsed", count);
 
     // print as tree
-    for (auto e = t[0].begin(); e != t[0].end(); e++)
+    for (auto e = t.at(0).begin(); e != t.at(0).end(); e++)
         print_tree(m, t, *e, 0);
 }
