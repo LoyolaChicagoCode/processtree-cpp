@@ -16,7 +16,8 @@ using std::getline;
 typedef unordered_map<unsigned int, string> cmd_map;
 typedef unordered_map<unsigned int, vector<unsigned int> > ppid_map;
 
-void print_tree(cmd_map& m, ppid_map& t, const unsigned int i, const unsigned int l) {
+
+void print_tree(const cmd_map& m, const ppid_map& t, const unsigned int i, const unsigned int l) {
     // indent, then print current process
     fmt::print("{} {}: {}\n", string(l, ' '), i, m.at(i));
     // return if current process is a leaf
