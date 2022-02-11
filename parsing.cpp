@@ -39,9 +39,12 @@ process_parser::process_parser(const string& header) {
     if (pid == string::npos) report_missing_header_field("PID");
     ppid = find_header_field(tokens, "PPID");
     if (ppid == string::npos) report_missing_header_field("PPID");
+    auto pos_cmd = find_header_field(tokens, "CMD");
+    auto pos_command = find_header_field(tokens, "COMMAND");
+    auto pos = min(pos_cmd, pos_command);
     cmd = min(header.find("CMD"), header.find("COMMAND"));
     spdlog::debug("header columns {} {} {}", pid, ppid, cmd);
-    if (cmd < max(pid, ppid)) {
+    if (pos < tokens.size() || cmd < max(pid, ppid)) {
         spdlog::error("required header field CMD or COMMAND missing or not last!");
         throw 1;
     }

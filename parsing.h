@@ -17,8 +17,9 @@ using std::string;
 
 class process_parser {
 private:
-    size_t pid, ppid, cmd;
-    bool pidFirst;
+    size_t pid;    // PID field number
+    size_t ppid;   // PPID field number
+    size_t cmd;    // CMD or COMMAND column (not field number)
 public:
     process_parser(const string& line);
     process parse(const string& line) const;
