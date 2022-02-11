@@ -22,7 +22,7 @@ using std::vector;
 
 void report_missing_header_field(const string& name) {
     spdlog::error("required header field {} missing!", name);
-    exit(1);
+    throw 1;
 }
 
 size_t find_header_field(vector<string>& tokens, const string& name) {
@@ -43,7 +43,7 @@ process_parser::process_parser(const string& header) {
     spdlog::debug("header columns {} {} {}", pid, ppid, cmd);
     if (cmd < max(pid, ppid)) {
         spdlog::error("required header field CMD or COMMAND missing or not last!");
-        exit(1);
+        throw 1;
     }
 }
 

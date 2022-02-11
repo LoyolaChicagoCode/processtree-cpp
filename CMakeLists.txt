@@ -44,10 +44,14 @@ enable_testing()
 add_executable(
         processtree_tests
         processtree_tests.cpp
+        parsing.cpp
 )
 target_link_libraries(
         processtree_tests
         gtest_main
+        spdlog::spdlog
+        fmt::fmt
+        scn::scn
 )
 
 include(GoogleTest)
