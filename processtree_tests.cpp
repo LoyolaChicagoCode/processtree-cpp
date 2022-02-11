@@ -14,7 +14,7 @@ TEST(ProcessTreeTests, Parser1) {
     try {
         process_parser p("a b c");
         FAIL();
-    } catch (int e) {
+    } catch (const int e) {
         SUCCEED();
     }
 }
