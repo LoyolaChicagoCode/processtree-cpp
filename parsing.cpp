@@ -20,12 +20,12 @@ using std::max;
 using std::string;
 using std::vector;
 
-void report_missing_header_field(const char name[]) {
+void report_missing_header_field(const string& name) {
     spdlog::error("required header field {} missing!", name);
     exit(1);
 }
 
-size_t find_header_field(vector<string>& tokens, const char name[]) {
+size_t find_header_field(vector<string>& tokens, const string& name) {
     const vector<string>::iterator first = tokens.begin(), last = tokens.end();
     const vector<string>::iterator it = find(first, last, name);
     return it < last ? it - first : string::npos;
