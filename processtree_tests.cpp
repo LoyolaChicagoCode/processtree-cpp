@@ -7,7 +7,7 @@ class ParserTest : public testing::Test {
 protected:
     static void SetUpTestSuite() {
         spdlog::set_level(spdlog::level::debug);
-        spdlog::info("spdlog enabled");
+        spdlog::info("spdlog level set to debug");
     }
 
     static void TearDownTestSuite() {
