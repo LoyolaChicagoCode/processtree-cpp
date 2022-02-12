@@ -43,8 +43,8 @@ process_parser::process_parser(const string& header) {
     auto pos_command = find_header_field(tokens, "COMMAND");
     auto pos = min(pos_cmd, pos_command);
     cmd = min(header.find("CMD"), header.find("COMMAND"));
-    spdlog::debug("header columns {} {} {}", pid, ppid, cmd);
-    if (pos < tokens.size() || cmd < max(pid, ppid)) {
+    spdlog::debug("header columns {} {} {} {} {}", pid, ppid, pos, cmd, tokens.size());
+    if (pos < tokens.size() - 1) {
         spdlog::error("required header field CMD or COMMAND missing or not last!");
         throw 1;
     }
