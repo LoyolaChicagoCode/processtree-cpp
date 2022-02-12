@@ -107,3 +107,4 @@ CMakeCache.txt
 *.cmake
 
 processtree-*
+\#*
