@@ -8,7 +8,7 @@
 # Building
 
 ```
-$ cmake -DCMAKE_BUILD_TYPE=Release -S . -B build
+$ cmake -DCMAKE_C_COMPILER=$(which gcc-11) -DCMAKE_CXX_COMPILER=$(which g++-11) -DCMAKE_BUILD_TYPE=Release -S . -B build
 $ cmake --build build
 ```
 

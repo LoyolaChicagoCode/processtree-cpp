@@ -7,11 +7,24 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-find_package(spdlog REQUIRED)
-
-find_package(fmt REQUIRED)
-
 include(FetchContent)
+
+FetchContent_Declare(
+        fmt
+        GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+        GIT_TAG        8.1.1
+)
+FetchContent_MakeAvailable(fmt)
+
+# Lots of compilation errors without this setting
+option(SPDLOG_FMT_EXTERNAL "Use external fmt library instead of bundled" ON)
+FetchContent_Declare(
+        spdlog
+        GIT_REPOSITORY https://github.com/gabime/spdlog.git
+        GIT_TAG        v1.9.2
+)
+FetchContent_MakeAvailable(spdlog)
+
 FetchContent_Declare(
         scnlib
         GIT_REPOSITORY https://github.com/eliaskosunen/scnlib.git
@@ -27,9 +40,9 @@ add_executable(
 
 target_link_libraries(
         processtree
-        spdlog::spdlog
-        fmt::fmt
         scn::scn
+        fmt::fmt
+        spdlog::spdlog
 )
 
 FetchContent_Declare(

@@ -23,7 +23,9 @@ using std::chrono::milliseconds;
 
 typedef unordered_map<unsigned int, const string> cmd_map;
 typedef unordered_map<unsigned int, vector<unsigned int> > ppid_map;
-typedef vector<const pair<const string, const steady_clock::time_point> > ts_vector;
+
+// g++ bug: cannot use const pair - works fine with clang++ on MacOS
+typedef vector<pair<const string, const steady_clock::time_point> > ts_vector;
 
 void read_input(string& header, forward_list<string>& lines) {
     getline(cin, header);
