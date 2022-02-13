@@ -34,4 +34,5 @@ $ ./build/bin/processtree_tests
 - spdlog is extremely fast even when using the method calls instead of the compile-time macros.
 - stdio is still about three times as fast as the combination of {fmt} and `std::getline`.
 - There can be very subtle differences between clang++ and g++.
-- It's best to use `FetchContent` for portability across platforms and toolchains. 
+- It's best to use `FetchContent` for portability across platforms and toolchains.
+- The spdlog source has a bundled version of fmt; one needs to compile it against the standalone source of fmt when using both.  
