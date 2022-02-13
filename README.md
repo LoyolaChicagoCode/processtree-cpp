@@ -33,3 +33,5 @@ $ ./build/bin/processtree_tests
 - `cin.getline` is quite a bit slower than `std::getline`: total execution time 16 sec vs 8 sec for 2m lines of input.
 - spdlog is extremely fast even when using the method calls instead of the compile-time macros.
 - stdio is still about three times as fast as the combination of {fmt} and `std::getline`.
+- There can be very subtle differences between clang++ and g++.
+- It's best to use `FetchContent` for portability across platforms and toolchains. 
