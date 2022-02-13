@@ -1,4 +1,12 @@
-# Requirements
+# Required tools
+
+- [CMake](https://cmake.org/)
+- [GCC 11](https://gcc.gnu.org/)
+
+# Dependencies
+
+The project uses CMake's `FetchContent` to pull in appropriate versions of these dependencies at the source level during the build process.  
+This ensures that the dependencies are link-time compatible with the project itself.
 
 - [GoogleTest](https://google.github.io/googletest)
 - [spdLog](https://spdlog.docsforge.com)
@@ -11,6 +19,9 @@
 $ cmake -DCMAKE_C_COMPILER=$(which gcc-11) -DCMAKE_CXX_COMPILER=$(which g++-11) -DCMAKE_BUILD_TYPE=Release -S . -B build
 $ cmake --build build
 ```
+
+These compiler settings should find the installed compilers in a platform-independent way.
+The `-DCMAKE_BUILD_TYPE=Release` setting is optional and will turn on compile-time optimization for more realistic performance measurements.
 
 # Running the program
 
