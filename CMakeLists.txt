@@ -32,6 +32,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(scnlib)
 
+FetchContent_Declare(
+        cli11
+        GIT_REPOSITORY https://github.com/CLIUtils/CLI11
+        GIT_TAG        v2.1.2
+)
+FetchContent_MakeAvailable(cli11)
+
 add_executable(
         processtree
         main.cpp
@@ -43,6 +50,7 @@ target_link_libraries(
         scn::scn
         fmt::fmt
         spdlog::spdlog
+        CLI11::CLI11
 )
 
 FetchContent_Declare(

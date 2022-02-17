@@ -6,6 +6,7 @@
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <CLI/CLI.hpp>
 
 #include "parsing.h"
 
@@ -90,10 +91,23 @@ void print_timestamps(const ts_vector& timestamps) {
     spdlog::info("TOTAL time: {} ms", duration_cast<milliseconds>(stop - start).count());
 }
 
+// FIXME make strongly typed by adding back class keyword
+enum Input : int { stdio, scn_getline, cin_getline, std_getline };
+
 int main(const int argc, const char* const argv[]) {
     spdlog::set_level(spdlog::level::info);
     spdlog::set_default_logger(spdlog::stderr_color_st("arbitrary"));
     spdlog::set_default_logger(spdlog::stderr_color_st(""));
+
+    CLI::App app{"processtree: show process hierarchy as a tree"};
+
+    // https://github.com/CLIUtils/CLI11/blob/main/examples/enum.cpp
+
+    Input input {Input:Input::std_getline};
+    app.add_option("-i,--input", input, "Input method");
+
+    CLI11_PARSE(app, argc, argv);
+    spdlog::info("input method {}", input);
 
     ts_vector timestamps;
 
