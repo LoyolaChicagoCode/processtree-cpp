@@ -12,6 +12,7 @@ This ensures that the dependencies are link-time compatible with the project its
 - [spdLog](https://spdlog.docsforge.com)
 - [{fmt}](https://fmt.dev)
 - [scnlib](https://scnlib.readthedocs.io)
+- [CLI11](https://github.com/CLIUtils/CLI11)
 
 # Building
 
