@@ -1,9 +1,10 @@
 #include <iostream>
+#include <map>
 #include <vector>
 #include <forward_list>
 #include <chrono>
 #include <unordered_map>
-#include <fmt/core.h>
+#include <fmt/format.h>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <CLI/CLI.hpp>
@@ -91,8 +92,7 @@ void print_timestamps(const ts_vector& timestamps) {
     spdlog::info("TOTAL time: {} ms", duration_cast<milliseconds>(stop - start).count());
 }
 
-// FIXME make strongly typed by adding back class keyword
-enum Input : int { stdio, scn_getline, cin_getline, std_getline };
+enum class Input : int { stdio, scn, cin, std };
 
 int main(const int argc, const char* const argv[]) {
     spdlog::set_level(spdlog::level::info);
@@ -102,12 +102,18 @@ int main(const int argc, const char* const argv[]) {
     CLI::App app{"processtree: show process hierarchy as a tree"};
 
     // https://github.com/CLIUtils/CLI11/blob/main/examples/enum.cpp
-
-    Input input {Input:Input::std_getline};
-    app.add_option("-i,--input", input, "Input method");
+    Input input {Input::std};
+    const std::map<std::string, Input> map{
+            {"stdio", Input::stdio},
+            {"scn",   Input::scn},
+            {"cin",   Input::cin},
+            {"std",   Input::std}
+    };
+    app.add_option("-i,--input", input, "Input method")
+        ->transform(CLI::CheckedTransformer(map, CLI::ignore_case));
 
     CLI11_PARSE(app, argc, argv);
-    spdlog::info("input method {}", input);
+    spdlog::info("input method {}", static_cast<int>(input));
 
     ts_vector timestamps;
 
