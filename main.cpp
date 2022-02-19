@@ -1,5 +1,4 @@
 #include <iostream>
-#include <map>
 #include <vector>
 #include <forward_list>
 #include <chrono>
@@ -8,6 +7,7 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <CLI/CLI.hpp>
+#include <magic_enum.hpp>
 
 #include "parsing.h"
 
@@ -57,7 +57,7 @@ void insert_processes(const forward_list<process>& processes, cmd_map& m, ppid_m
     spdlog::debug("starting to insert processes into table");
     for (auto it = processes.begin(); it != processes.end(); it++) {
         const process& proc = *it;
-        m.insert(pair<unsigned int, const string&>(proc.pid, proc.cmd));
+        m.insert(pair(proc.pid, proc.cmd));
         t[proc.ppid].push_back(proc.pid);
         count++;
     }
@@ -103,17 +103,14 @@ int main(const int argc, const char* const argv[]) {
 
     // https://github.com/CLIUtils/CLI11/blob/main/examples/enum.cpp
     Input input {Input::std};
-    const std::map<std::string, Input> map{
-            {"stdio", Input::stdio},
-            {"scn",   Input::scn},
-            {"cin",   Input::cin},
-            {"std",   Input::std}
-    };
+    const auto entries = magic_enum::enum_entries<Input>();
+    unordered_map<string, Input> map;
+    std::for_each(entries.begin(), entries.end(), [&map](auto e) { map.insert(pair(e.second, e.first)); });
     app.add_option("-i,--input", input, "Input method")
         ->transform(CLI::CheckedTransformer(map, CLI::ignore_case));
 
     CLI11_PARSE(app, argc, argv);
-    spdlog::info("input method {}", static_cast<int>(input));
+    spdlog::info("input method {}", magic_enum::enum_name<Input>(input));
 
     ts_vector timestamps;
 
