@@ -13,6 +13,7 @@ This ensures that the dependencies are link-time compatible with the project its
 - [{fmt}](https://fmt.dev)
 - [scnlib](https://scnlib.readthedocs.io)
 - [CLI11](https://github.com/CLIUtils/CLI11)
+- [magic_enum](https://github.com/Neargye/magic_enum)
 
 # Building
 
