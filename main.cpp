@@ -42,21 +42,20 @@ void read_input(string& header, forward_list<string>& lines) {
 }
 
 void parse_lines(const string& header, const forward_list<string>& lines, forward_list<process>& processes) {
-    process_parser parser(header);
+    const process_parser parser(header);
     auto count = 0;
     spdlog::debug("starting to parse processes");
-    for (auto it = lines.begin(); it != lines.end(); it++) {
-        processes.push_front(parser.parse(*it));
+    for (const auto& line: lines) {
+        processes.push_front(parser.parse(line));
         count++;
-    }
+    };
     spdlog::debug("{} processes parsed", count);
 }
 
 void insert_processes(const forward_list<process>& processes, cmd_map& m, ppid_map& t) {
     auto count = 0;
     spdlog::debug("starting to insert processes into table");
-    for (auto it = processes.begin(); it != processes.end(); it++) {
-        const process& proc = *it;
+    for (const auto& proc: processes) {
         m.insert(pair(proc.pid, proc.cmd));
         t[proc.ppid].push_back(proc.pid);
         count++;
@@ -68,27 +67,29 @@ void print_tree(FILE* const dest, const cmd_map& m, const ppid_map& t, const uns
     // indent, then print current process
     fmt::print(dest,"{} {}: {}\n", string(l, ' '), i, m.at(i));
     // return if current process is a leaf
-    auto it = t.find(i);
+    const auto it = t.find(i);
     if (it == t.end()) return;
     // print children indented by one more level
-    for (auto e = it->second.begin(); e != it->second.end(); e++)
-        print_tree(dest, m, t, *e, l + 1);
+    for (const auto i: it->second)
+        print_tree(dest, m, t,i, l + 1);
 }
 
 void print_forest(FILE* const dest, const cmd_map& m, const ppid_map& t) {
-    for (auto e = t.at(0).begin(); e != t.at(0).end(); e++)
-        print_tree(stdout, m, t, *e, 0);
+    for (const auto i: t.at(0))
+        print_tree(dest, m, t, i, 0);
 }
 
 void mark_time(ts_vector& timestamps, const string& label) {
-    timestamps.push_back(pair<const string&, const steady_clock::time_point&>(label, steady_clock::now()));
+    timestamps.push_back(pair(label, steady_clock::now()));
 }
 
 void print_timestamps(const ts_vector& timestamps) {
-    for (auto t = timestamps.begin() + 1; t != timestamps.end(); t++)
-        spdlog::info("{}: {} ms", t->first, duration_cast<milliseconds>(t->second - (t - 1)->second).count());
-    auto start = timestamps.front().second;
-    auto stop = timestamps.back().second;
+    for (auto t = timestamps.begin() + 1; t != timestamps.end(); t++) {
+        const auto dur = duration_cast<milliseconds>(t->second - (t - 1)->second).count();
+        spdlog::info("{}: {} ms", t->first, dur);
+    }
+    const auto& start = timestamps.front().second;
+    const auto& stop = timestamps.back().second;
     spdlog::info("TOTAL time: {} ms", duration_cast<milliseconds>(stop - start).count());
 }
 
@@ -103,9 +104,11 @@ int main(const int argc, const char* const argv[]) {
 
     // https://github.com/CLIUtils/CLI11/blob/main/examples/enum.cpp
     Input input {Input::std};
-    const auto entries = magic_enum::enum_entries<Input>();
+    const auto& entries = magic_enum::enum_entries<Input>();
     unordered_map<string, Input> map;
-    std::for_each(entries.begin(), entries.end(), [&map](auto e) { map.insert(pair(e.second, e.first)); });
+    // invert entries into map for CLI arg parsing
+    for (const auto& e: entries)
+        map.insert(pair(e.second, e.first));
     app.add_option("-i,--input", input, "Input method")
         ->transform(CLI::CheckedTransformer(map, CLI::ignore_case));
 

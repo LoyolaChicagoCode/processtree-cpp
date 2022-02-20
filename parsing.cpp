@@ -26,8 +26,8 @@ void report_missing_header_field(const string& name) {
 }
 
 size_t find_header_field(vector<string>& tokens, const string& name) {
-    const vector<string>::iterator first = tokens.begin(), last = tokens.end();
-    const vector<string>::iterator it = find(first, last, name);
+    const auto first = tokens.begin(), last = tokens.end();
+    const auto it = find(first, last, name);
     return it < last ? it - first : string::npos;
 }
 
