@@ -105,6 +105,7 @@ Makefile
 CMakeFiles
 CMakeCache.txt
 *.cmake
+cmake-build-*
 
 processtree-*
 \#*
