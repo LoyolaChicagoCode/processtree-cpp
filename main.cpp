@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <forward_list>
-#include <chrono>
 #include <unordered_map>
+#include <chrono>
 #include <fmt/format.h>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -93,6 +93,17 @@ void print_timestamps(const ts_vector& timestamps) {
     spdlog::info("TOTAL time: {} ms", duration_cast<milliseconds>(stop - start).count());
 }
 
+// map from strings to corresponding enum values for arg parsing
+// TODO move to separate util source
+// TODO magic_enum PR
+template <typename E> unordered_map<string, E> enum_rentries() {
+    const auto& entries = magic_enum::enum_entries<E>();
+    unordered_map<string, E> rentries;
+    for (const auto& e: entries)
+        rentries.insert(pair(e.second, e.first));
+    return rentries;
+}
+
 enum class Input : int { stdio, scn, cin, std };
 
 int main(const int argc, const char* const argv[]) {
@@ -104,13 +115,8 @@ int main(const int argc, const char* const argv[]) {
 
     // https://github.com/CLIUtils/CLI11/blob/main/examples/enum.cpp
     Input input {Input::std};
-    const auto& entries = magic_enum::enum_entries<Input>();
-    unordered_map<string, Input> map;
-    // invert entries into map for CLI arg parsing
-    for (const auto& e: entries)
-        map.insert(pair(e.second, e.first));
     app.add_option("-i,--input", input, "Input method")
-        ->transform(CLI::CheckedTransformer(map, CLI::ignore_case));
+        ->transform(CLI::CheckedTransformer(enum_rentries<Input>(), CLI::ignore_case));
 
     CLI11_PARSE(app, argc, argv);
     spdlog::info("input method {}", magic_enum::enum_name<Input>(input));
