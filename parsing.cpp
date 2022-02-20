@@ -18,14 +18,15 @@
 using std::min;
 using std::max;
 using std::string;
+using std::string_view;
 using std::vector;
 
-void report_missing_header_field(const string& name) {
+void report_missing_header_field(const string_view name) {
     spdlog::error("required header field {} missing!", name);
     throw 1;
 }
 
-size_t find_header_field(vector<string>& tokens, const string& name) {
+size_t find_header_field(vector<string>& tokens, const string_view name) {
     const auto first = tokens.begin(), last = tokens.end();
     const auto it = find(first, last, name);
     return it < last ? it - first : string::npos;

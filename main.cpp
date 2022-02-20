@@ -12,6 +12,7 @@
 #include "parsing.h"
 
 using std::string;
+using std::string_view;
 using std::pair;
 using std::unordered_map;
 using std::vector;
@@ -79,8 +80,8 @@ void print_forest(FILE* const dest, const cmd_map& m, const ppid_map& t) {
         print_tree(dest, m, t, i, 0);
 }
 
-void mark_time(ts_vector& timestamps, const string& label) {
-    timestamps.push_back(pair(label, steady_clock::now()));
+void mark_time(ts_vector& timestamps, const string_view label) {
+    timestamps.push_back(pair(label.data(), steady_clock::now()));
 }
 
 void print_timestamps(const ts_vector& timestamps) {
