@@ -6,8 +6,8 @@
 class ParserTest : public testing::Test {
 protected:
     static void SetUpTestSuite() {
-        spdlog::set_level(spdlog::level::info);
-        spdlog::info("spdlog level set to {}", spdlog::get_level());
+        spdlog::set_level(spdlog::level::off);
+        spdlog::info("spdlog level set to {}", spdlog::get_level()); // should be invisible!
     }
 
     static void TearDownTestSuite() {
