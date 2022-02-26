@@ -25,6 +25,8 @@ $ cmake --build build
 These compiler settings should find the installed compilers in a platform-independent way.
 The `-DCMAKE_BUILD_TYPE=Release` setting is optional and will turn on compile-time optimization for more realistic performance measurements.
 
+(If using CLion, one can also specify the compilers in a [CMake profile](https://www.jetbrains.com/help/clion/cmake-profile.html).)
+
 # Running the program
 
 ```
