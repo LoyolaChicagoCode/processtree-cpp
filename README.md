@@ -18,14 +18,14 @@ This ensures that the dependencies are link-time compatible with the project its
 # Building
 
 ```
-$ cmake -DCMAKE_C_COMPILER=$(which gcc-11) -DCMAKE_CXX_COMPILER=$(which g++-11) -DCMAKE_BUILD_TYPE=Release -S . -B build
+$ cmake -DCMAKE_C_COMPILER=gcc-11 -DCMAKE_CXX_COMPILER=g++-11 -DCMAKE_BUILD_TYPE=Release -S . -B build
 $ cmake --build build
 ```
 
 These compiler settings should find the installed compilers in a platform-independent way.
 The `-DCMAKE_BUILD_TYPE=Release` setting is optional and will turn on compile-time optimization for more realistic performance measurements.
 
-(If using CLion, one can also specify the compilers in a [CMake profile](https://www.jetbrains.com/help/clion/cmake-profile.html).)
+(If using CLion, one can also set the compilers in a [CMake profile](https://www.jetbrains.com/help/clion/cmake-profile.html) or a [toolchain](https://www.jetbrains.com/help/clion/how-to-create-toolchain-in-clion.html).)
 
 # Running the program
 
