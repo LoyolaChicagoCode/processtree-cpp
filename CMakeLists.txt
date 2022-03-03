@@ -49,7 +49,6 @@ FetchContent_MakeAvailable(magic_enum)
 add_executable(
         processtree
         main.cpp
-        parsing.cpp
 )
 
 target_link_libraries(
@@ -73,7 +72,6 @@ enable_testing()
 add_executable(
         processtree_tests
         processtree_tests.cpp
-        parsing.cpp
 )
 target_link_libraries(
         processtree_tests
