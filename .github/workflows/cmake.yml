@@ -9,6 +9,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  GTEST_EXECUTABLE: processtree_tests
 
 jobs:
   build:
@@ -32,5 +33,5 @@ jobs:
     - name: GoogleTest
       working-directory: ${{github.workspace}}/build
       # Execute Google tests in the given configuration
-      run: ./bin/processtree_tests
+      run: ./bin/${{env.GTEST_EXECUTABLE}
       
