@@ -50,6 +50,7 @@ add_executable(
         processtree
         main.cpp
         processtree.cpp
+        util.cpp
 )
 
 target_link_libraries(
