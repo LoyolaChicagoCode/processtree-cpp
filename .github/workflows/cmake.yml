@@ -33,5 +33,4 @@ jobs:
     - name: GoogleTest
       working-directory: ${{github.workspace}}/build
       # Execute Google tests in the given configuration
-      run: ./bin/${{env.GTEST_EXECUTABLE}
-      
+      run: ./bin/${{env.GTEST_EXECUTABLE}}
