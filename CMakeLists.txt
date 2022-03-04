@@ -49,6 +49,7 @@ FetchContent_MakeAvailable(magic_enum)
 add_executable(
         processtree
         main.cpp
+        processtree.cpp
 )
 
 target_link_libraries(
@@ -72,13 +73,16 @@ enable_testing()
 add_executable(
         processtree_tests
         processtree_tests.cpp
+        processtree.cpp
 )
 target_link_libraries(
         processtree_tests
         gtest_main
-        spdlog::spdlog
-        fmt::fmt
         scn::scn
+        fmt::fmt
+        spdlog::spdlog
+        CLI11::CLI11
+        magic_enum
 )
 
 include(GoogleTest)
