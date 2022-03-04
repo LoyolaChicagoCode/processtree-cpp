@@ -1,4 +1,4 @@
-![build-test](https://github.com/LoyolaChicagoCode/processtree-cpp/actions/workflows/cmake.yaml/badge.svg)
+![build-test](https://github.com/LoyolaChicagoCode/processtree-cpp/actions/workflows/cmake.yml/badge.svg)
 
 # Required tools
 
