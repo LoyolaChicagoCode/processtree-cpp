@@ -11,7 +11,7 @@ The project uses CMake's `FetchContent` to pull in appropriate versions of these
 This ensures that the dependencies are link-time compatible with the project itself.
 
 - [GoogleTest](https://google.github.io/googletest)
-- [spdLog](https://spdlog.docsforge.com)
+- [spdlog](https://spdlog.docsforge.com)
 - [{fmt}](https://fmt.dev)
 - [scnlib](https://scnlib.readthedocs.io)
 - [CLI11](https://github.com/CLIUtils/CLI11)
